@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minecraft Server Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎮 Minecraft 服务器控制台</h1>
+            <div class="status-bar">
+                <span id="server-status" class="status stopped">已停止</span>
+                <span id="tunnel-status" class="status stopped">Tunnel 离线</span>
+            </div>
+        </header>
+
+        <main>
+            <!-- 控制面板 -->
+            <section class="control-panel">
+                <h2>服务器控制</h2>
+                <div class="button-group">
+                    <button id="start-btn" class="btn btn-success" onclick="startServer()">
+                        <span class="icon">▶️</span> 启动服务器
+                    </button>
+                    <button id="stop-btn" class="btn btn-danger" onclick="stopServer()" disabled>
+                        <span class="icon">⏹️</span> 停止服务器
+                    </button>
+                    <button id="refresh-btn" class="btn btn-primary" onclick="refreshStatus()">
+                        <span class="icon">🔄</span> 刷新状态
+                    </button>
+                </div>
+            </section>
+
+            <!-- 状态信息 -->
+            <section class="info-panel">
+                <div class="card">
+                    <h3>📊 服务器信息</h3>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <span class="label">类型:</span>
+                            <span class="value" id="server-type">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">版本:</span>
+                            <span class="value" id="server-version">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">内存:</span>
+                            <span class="value" id="server-memory">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">玩家:</span>
+                            <span class="value" id="player-count">0/0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>🌐 Cloudflare Tunnel</h3>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <span class="label">模式:</span>
+                            <span class="value" id="tunnel-mode">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">状态:</span>
+                            <span class="value" id="tunnel-status-detail">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">连接地址:</span>
+                            <span class="value" id="tunnel-url">-</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 实时日志 -->
+            <section class="logs-panel">
+                <h2>📜 实时日志</h2>
+                <div class="log-controls">
+                    <button class="btn btn-sm" onclick="clearLogs()">清空日志</button>
+                    <button class="btn btn-sm" onclick="toggleAutoScroll()">自动滚动: <span id="autoscroll-status">开启</span></button>
+                </div>
+                <div id="logs-container" class="logs-container"></div>
+            </section>
+        </main>
+
+        <footer>
+            <p>Powered by <a href="https://huggingface.co" target="_blank">Hugging Face</a> & <a href="https://cloudflare.com" target="_blank">Cloudflare</a></p>
+            <p>Last updated: <span id="last-update">-</span></p>
+        </footer>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

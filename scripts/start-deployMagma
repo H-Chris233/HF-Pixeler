@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# shellcheck source=start-utils
+. "$(dirname "$0")/start-utils"
+isDebugging && set -x
+
+: "${MAGMA_VERSION:=}"
+
+resolveVersion
+
+# Neo Magma currently supports just 1.21.x
+if [[ ! $VERSION = 1.21.* ]]; then
+logError "Magma does not support $VERSION (expected 1.21.x)"
+exit 1
+fi
+
+if ! SERVER=$(get --output-filename --skip-up-to-date --output /data "https://magmafoundation.org/api/versions/${MAGMA_VERSION}/download"); then
+  logError "Failed to download Magma server jar for $MAGMA_VERSION"
+  exit 1
+fi
+
+export SERVER
+export FAMILY=HYBRID
+export HYBRIDTYPE=forge
+
+exec "$(dirname "$0")/start-spiget" "$@"
